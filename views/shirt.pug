@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h1= title
+  p Without shirt no human can survive in this world.
+  div(class="container-fluid")
+        div(class="row")
+            -
+                let shirt = [
+                    {
+                        "name": "ultraseries",
+                        "cost":700,
+                        "brand": "uspolo"                        
+                    },
+                    {
+                        "name": "casual",
+                        "cost": 1000,
+                        "brand": "sandro"
+                    },
+                    {
+                        "name": "formal",
+                        "cost": 800,
+                        "brand": "uslin"
+                    },                   
+                ]
+            each v in shirt
+                div(class="col-sm-2") #{v.name}
+                br
+                br
+                div(class="col-sm-2") #{v.cost}
+                div(class="col-sm-2") #{v.brand}
+
+
+
