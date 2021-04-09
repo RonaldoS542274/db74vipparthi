@@ -14,10 +14,19 @@ exports.shirt_list = async function(req, res) {
     res.error(500,`{"error": ${err}}`);
     }
     };
-// for a specific Shirt.
-exports.shirt_detail = function(req, res) {
- res.send('NOT IMPLEMENTED: shirt detail: ' + req.params.id);
+
+    // for a specific Shirt.
+exports.shirt_detail = async function(req, res) {
+    console.log("detail"  + req.params.id)
+    try {
+        result = await shirt.findById( req.params.id)
+        res.send(result)
+    } catch (error) {
+        res.status(500)
+        res.send(`{"error": document for id ${req.params.id} not found`);
+    }
 };
+
 // Handle Shirt create on POST.
 //exports.shirt_create_post = function(req, res) {
 // res.send('NOT IMPLEMENTED: shirt create POST');
@@ -57,8 +66,8 @@ exports.shirt_update_put = function(req, res) {
 // Handle a show all view
 exports.shirt_view_all_Page = async function(req, res) {
     try{
-    shirt = await shirts.find();
-    res.render('shirt', { title: 'shirts Search Results', results: shirts });
+    shirt = await shirt.find();
+    res.render('shirt', { title: 'shirt Search Results', results: shirts });
     }
     catch(err){
     res.error(500,`{"error": ${err}}`);
