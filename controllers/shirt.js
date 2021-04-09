@@ -57,10 +57,25 @@ exports.shirt_create_post = async function(req, res) {
 exports.shirt_delete = function(req, res) {
  res.send('NOT IMPLEMENTED: shirt delete DELETE ' + req.params.id);
 };
+
 // Handle Shirt update form on PUT.
-exports.shirt_update_put = function(req, res) {
- res.send('NOT IMPLEMENTED: shirt update PUT' + req.params.id);
+exports.shirt_update_put = async function(req, res) {
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
+    try {
+        let toUpdate = await shirt.findById( req.params.id)
+        // Do updates of properties
+        if(req.body.name) toUpdate.name = req.body.name;
+        if(req.body.brand) toUpdate.brand = req.body.brand;
+        if(req.body.cost) toUpdate.cost = req.body.cost;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed`);
+    }
 };
+
 
 // VIEWS
 // Handle a show all view
