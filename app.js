@@ -14,38 +14,39 @@ var usersRouter = require('./routes/users');
 var shirtRouter = require('./routes/shirt');
 var starsRouter = require('./routes/stars');
 var slotsRouter = require('./routes/slots');
-var Shirt = require("./models/shirt");
+var shirt = require("./models/shirt");
 var resourceRouter = require('./routes/resource');
-
 
 // We can seed the collection if needed on server start
 
 async function recreateDB() {
   // Delete everything
-  await Shirt.deleteMany();
-  let instance1 = new Shirt({
-      name: "formals",
-      cost:  2000,
-      brand: "peterengland"
+  await shirt.deleteMany();
+  let instance1 = new shirt({
+      name: "casuals",
+      brand: "USPolo",
+      cost:  1000,
       
   });
   instance1.save(function(err, doc) {
       if (err) return console.error(err);
       console.log("First object saved")
   });
-  let instance2 = new Shirt({
-      name: "casuals",
-      cost:  1000,
-      brand: "USPolo"
+  let instance2 = new shirt({
+      name: "kurtas",
+      brand: "Manyavar",
+      cost:  3000,
+      
   });
   instance2.save(function(err, doc) {
       if (err) return console.error(err);
       console.log("Second object saved")
   });
-  let instance3 = new Shirt({
-      name: "kurtas",
-      cost:  3000,
-      brand: "Manyavar"
+  let instance3 = new shirt({
+      name: "formals",
+      brand: "peterengland",
+      cost:  2000,
+      
   });
   instance3.save(function(err, doc) {
       if (err) return console.error(err);
@@ -75,7 +76,7 @@ app.use('/users', usersRouter);
 app.use('/shirt', shirtRouter);
 app.use('/stars', starsRouter);
 app.use('/slots', slotsRouter);
-app.use('/', resourceRouter);
+app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
