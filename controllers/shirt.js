@@ -53,10 +53,19 @@ exports.shirt_create_post = async function(req, res) {
     };
 
 
-// Handle Shirt delete form on DELETE.
-exports.shirt_delete = function(req, res) {
- res.send('NOT IMPLEMENTED: shirt delete DELETE ' + req.params.id);
+// Handle Costume delete on DELETE.
+exports.shirt_delete = async function(req, res) {
+    console.log("delete "  + req.params.id)
+    try {
+        result = await shirt.findByIdAndDelete( req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
+    }
 };
+
 
 // Handle Shirt update form on PUT.
 exports.shirt_update_put = async function(req, res) {
@@ -88,3 +97,16 @@ exports.shirt_view_all_Page = async function(req, res) {
     res.error(500,`{"error": ${err}}`);
     }
     };
+    // Handle a show one view with id specified by query
+exports.shirt_view_one_Page = async function(req, res) {
+    console.log("single view for id "  + req.query.id)
+    try{
+        result = await shirt.findById( req.query.id)
+        res.render('shirtdetail', 
+{ title: 'shirt Detail', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
