@@ -9,11 +9,10 @@ block content
                 let shirt = results
                     
             each v in shirt
-                div(class="col-sm-2") #{v.name}
-                br
-                br
-                div(class="col-sm-2") #{v.cost}
-                div(class="col-sm-2") #{v.brand}
-
-
-
+                - let destination = `dispatch(\"/shirt/update?id=${v._id}\")`
+                div(class="row-sm-2" class='m-1') Shirt #{v.name}(#{v.brand}) is #{v.cost}
+                    button(class="btn-primary ml-1", onclick=destination) Update
+            script.
+                function dispatch(path){
+                    window.location.href = path
+                }
