@@ -1,17 +1,24 @@
 extends layout
 
 block content
-  h1= title
-  p Without shirt no human can survive in this world.
-  div(class="container-fluid")
+  
+    h1= title
+
+    div(class="container-fluid")
         div(class="row")
             -
-                let shirt = results
+                let shirt  = results
                     
             each v in shirt
                 - let destination = `dispatch(\"/shirt/update?id=${v._id}\")`
+                - let detail = `dispatch(\"/shirt/detail?id=${v._id}\")`
+                - let del = `dispatch(\"/shirt/delete?id=${v._id}\")`
+
                 div(class="row-sm-2" class='m-1') Shirt #{v.name}(#{v.brand}) is #{v.cost}
-                    button(class="btn-primary ml-1", onclick=destination) Update
+                    button.btn(class="btn-success ml-1", onclick=detail) Detail
+                    button.btn(class="btn-primary ml-1", onclick=destination) Update
+                    button.btn(class="btn-danger ml-1", onclick=del) Delete
+                
             script.
                 function dispatch(path){
                     window.location.href = path
